@@ -1,0 +1,15 @@
+FROM ruby:2.7
+MAINTAINER maintainer@example.com
+
+RUN groupadd -g 61000 docker
+RUN useradd -g 61000 -l -M -s /bin/false -u 61000 docker
+
+ENV INSTALL_PATH /opt/app
+RUN mkdir -p $INSTALL_PATH
+
+RUN gem install rails bundler
+RUN chown -R docker:docker /opt/app
+WORKDIR /opt/app
+
+USER docker
+CMD ["/bin/sh"]
