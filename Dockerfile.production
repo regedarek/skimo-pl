@@ -2,7 +2,7 @@ FROM ruby:2.7
 MAINTAINER maintainer@example.com
 
 RUN groupadd -g 61000 docker
-RUN useradd -g 61000 -l -M -s /bin/false -u 61000 docker
+RUN useradd -g 61000 -l -M -s /bin/false -u 61000 skimo
 
 ENV INSTALL_PATH /opt/app
 RUN mkdir -p $INSTALL_PATH
@@ -18,8 +18,8 @@ WORKDIR /opt/app/skimo-pl
 RUN bundle install
 
 COPY skimo-pl/ .
-RUN chown -R docker:docker /opt/app
-USER docker
+RUN chown -R docker:skimo /opt/app
+USER skimo
 RUN yarn install --check-files
 RUN rails webpacker:install
 VOLUME ["$INSTALL_PATH/public"]
