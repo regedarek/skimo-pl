@@ -11,7 +11,6 @@ require "action_mailer/railtie"
 require "action_mailbox/engine"
 require "action_text/engine"
 require "action_view/railtie"
-require "action_cable/engine"
 require "sprockets/railtie"
 # require "rails/test_unit/railtie"
 
@@ -29,8 +28,8 @@ module SkimoPl
 
     # Since we're using Redis for Sidekiq, we might as well use Redis to back
     # our cache store. This keeps our application stateless as well.
-    config.cache_store = :redis_store, ENV['CACHE_URL'],
-                         { namespace: 'skimo-pl::cache' }
+    #config.cache_store = :redis_store, ENV['CACHE_URL'],
+    #                     { namespace: 'skimo-pl::cache' }
 
     # If you've never dealt with background workers before, this is the Rails
     # way to use them through Active Job. We just need to tell it to use Sidekiq.
