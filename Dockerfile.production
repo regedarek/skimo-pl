@@ -22,7 +22,5 @@ RUN chown -R docker:docker /opt/app
 USER docker
 RUN yarn install --check-files
 RUN rails webpacker:install
-RUN rails assets:precompile
 VOLUME ["$INSTALL_PATH/public"]
-
-CMD ["rails", "server", "--binding", "0.0.0.0”]
+CMD bundle exec unicorn -c config/unicorn.rb
