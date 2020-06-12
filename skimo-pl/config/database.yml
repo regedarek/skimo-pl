@@ -8,4 +8,9 @@ staging:
   url: <%= ENV['DATABASE_URL'].gsub('?', '_staging?') %>
 
 production:
-  url: <%= ENV['DATABASE_URL'].gsub('?', '_production?') %>
+  <<: *default
+  host:     <%= ENV['DB_HOST'] %>
+  adapter:  <%= ENV['DB_ADAPTER'] || 'postgresql' %>
+  database: <%= ENV['DB_NAME'] %>
+  username: <%= ENV['DB_USER'] %>
+  password: <%= ENV['DB_PASSWORD'] %> 
