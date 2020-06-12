@@ -21,6 +21,7 @@ services:
   skimo-pl:
     build:
       context: .
+      dockerfile: ./Dockerfile.production
     depends_on:
       - postgres
       - redis
