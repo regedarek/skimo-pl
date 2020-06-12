@@ -1,26 +1,20 @@
-FROM ruby:2.7
-MAINTAINER maintainer@example.com
+FROM ruby:2.7-alpine
+MAINTAINER Zack Siri <zack@codemy.net>
 
-RUN groupadd -g 61000 docker
-RUN useradd -g 61000 -l -M -s /bin/false -u 61000 skimo
+RUN apk --update add --virtual build-dependencies \ 
+                               build-base \
+                               libxml2-dev \
+                               libxslt-dev \
+                               postgresql-dev \
+                               nodejs \
+                               tzdata \
+                               && rm -rf /var/cache/apk/*
 
-ENV INSTALL_PATH /opt/app
-RUN mkdir -p $INSTALL_PATH
 
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg -o /root/yarn-pubkey.gpg && apt-key add /root/yarn-pubkey.gpg
-RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list
-RUN apt-get update && apt-get install -y --no-install-recommends nodejs yarn
+RUN mkdir /usr/src/app
+WORKDIR /usr/src/app
 
-RUN gem install rails bundler
+COPY . /usr/src/app
 
-COPY skimo-pl/Gemfile Gemfile
-WORKDIR /opt/app/skimo-pl
-RUN bundle install
-
-COPY skimo-pl/ .
-RUN chown -R docker:skimo /opt/app
-USER skimo
-RUN yarn install --check-files
-RUN rails webpacker:install
-VOLUME ["$INSTALL_PATH/public"]
-CMD bundle exec unicorn -c config/unicorn.rb
+RUN gem update bundler
+RUN bundle install --path vendor/bundle --without development test doc --deployment --jobs=4
