@@ -1,0 +1,26 @@
+version: v1.0
+name: Docker
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+blocks:
+  - name: SkimoPL
+    task:
+      jobs:
+        - name: Build skimo-pl
+          commands:
+            - 'docker pull $DOCKER_USERNAME/dockerizing-ruby-skimo-pl:latest || true'
+            - 'docker build -t $DOCKER_USERNAME/dockerizing-ruby-skimo-pl:latest --cache-from=$DOCKER_USERNAME/dockerizing-ruby-skimo-pl:latest --build-arg USER_ID=$(id -u) --build-arg GROUP_ID=$(id -g) -f Dockerfile.production .'
+            - 'docker push $DOCKER_USERNAME/dockerizing-ruby-skimo-pl:latest'
+        - name: Build ngninx
+          commands:
+            - 'docker pull $DOCKER_USERNAME/dockerizing-ruby-nginx:latest || true'
+            - 'docker build -t $DOCKER_USERNAME/dockerizing-ruby-nginx:latest --cache-from=$DOCKER_USERNAME/dockerizing-ruby-nginx:latest -f Dockerfile.nginx .'
+            - 'docker push $DOCKER_USERNAME/dockerizing-ruby-nginx:latest'
+      secrets:
+        - name: dockerhub
+      prologue:
+        commands:
+          - checkout
+          - 'echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin'
