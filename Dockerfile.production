@@ -24,4 +24,5 @@ RUN yarn install --check-files
 RUN rails webpacker:install
 RUN rails assets:precompile
 VOLUME ["$INSTALL_PATH/public"]
-CMD bundle exec unicorn -c config/unicorn.rb
+
+CMD ["rails", "server", "--binding", "0.0.0.0”]
