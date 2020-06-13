@@ -1,22 +1,22 @@
 FROM ruby:2.7-alpine
 MAINTAINER Zack Siri <zack@codemy.net>
 
-ENV USER_ID 501
-ENV GROUP_ID 20
-ENV SECRET_TOKEN Wa4Kdu6hMt3tYKm4jb9p4vZUuc7jBVFw
-ENV WORKER_PROCESSES 1
-ENV LISTEN_ON 0.0.0.0:4000
-ENV DB_HOST postgres
-ENV DB_NAME skimo_development
-ENV DB_PASSWORD skimo
-ENV DB_USER skimo
-ENV RAILS_ENV production
-ENV RACK_ENV production
-ENV NODE_ENV production
-ENV CACHE_URL redis://redis:6379/0
-ENV JOB_WORKER_URL redis://redis:6379/0
-ENV RAILS_LOG_TO_STDOUT enabled
-ENV RAILS_SERVE_STATIC_FILES enabled
+ENV USER_ID=501
+ENV GROUP_ID=20
+ENV SECRET_TOKEN=Wa4Kdu6hMt3tYKm4jb9p4vZUuc7jBVFw
+ENV WORKER_PROCESSES=1
+ENV LISTEN_ON=0.0.0.0:4000
+ENV DB_HOST=postgres
+ENV DB_NAME=skimo_development
+ENV DB_PASSWORD=skimo
+ENV DB_USER=skimo
+ENV RAILS_ENV=production
+ENV RACK_ENV=production
+ENV NODE_ENV=production
+ENV CACHE_URL=redis://redis:6379/0
+ENV JOB_WORKER_URL=redis://redis:6379/0
+ENV RAILS_LOG_TO_STDOUT=enabled
+ENV RAILS_SERVE_STATIC_FILES=enabled
 
 RUN apk --update add --virtual build-dependencies \ 
                                build-base \
