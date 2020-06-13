@@ -17,9 +17,12 @@ RUN mkdir /usr/src/app
 WORKDIR /usr/src/app
 
 COPY skimo-pl /usr/src/app
-ENV SECRET_TOKEN=Wa4Kdu6hMt3tYKm4jb9p4vZUuc7jBVFw
-ENV RAILS_ENV=production
+
+COPY skimo-pl/package.json skimo-pl/yarn.lock ./
+RUN yarn install --frozen-lockfile --non-interactive
 
 RUN gem update bundler
 RUN bundle install --path vendor/bundle --without development test doc --deployment --jobs=4
-RUN bundle exec rake assets:precompile
+
+RUN bundle exec rake assets:clobber assets:precompile --trace
+RUN yarn cache clean
