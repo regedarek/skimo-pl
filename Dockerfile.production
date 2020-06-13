@@ -41,5 +41,5 @@ RUN yarn install --frozen-lockfile --non-interactive
 RUN gem update bundler
 RUN bundle install --path vendor/bundle --without development test doc --deployment --jobs=4
 
-RUN RAILS_ENV=production bundle exec rake assets:clobber assets:precompile --trace
+RUN RAILS_ENV=production SECRET_TOKEN=test bundle exec rake assets:clobber assets:precompile --trace
 RUN yarn cache clean
