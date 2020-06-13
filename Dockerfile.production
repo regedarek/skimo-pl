@@ -18,3 +18,4 @@ COPY skimo-pl /usr/src/app
 
 RUN gem update bundler
 RUN bundle install --path vendor/bundle --without development test doc --deployment --jobs=4
+RUN rails assets:precompile
