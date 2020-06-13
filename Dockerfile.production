@@ -19,4 +19,4 @@ COPY skimo-pl /usr/src/app
 
 RUN gem update bundler
 RUN bundle install --path vendor/bundle --without development test doc --deployment --jobs=4
-RUN RAILS_ENV=production bundle exec rake assets:precompile
+RUN SECRET_TOKEN=Wa4Kdu6hMt3tYKm4jb9p4vZUuc7jBVFw RAILS_ENV=production bundle exec rake assets:precompile
