@@ -4,8 +4,8 @@ services:
   postgres:
     image: postgres:12.1
     environment:
-      POSTGRES_USER: skimo-pl
-      POSTGRES_PASSWORD: test_db_password
+      POSTGRES_USER: skimopl
+      POSTGRES_PASSWORD: skimopl
     ports:
       - '5432:5432'
     volumes:
@@ -30,7 +30,7 @@ services:
         source: ./skimo-pl
         target: /opt/app/skimo-pl
     ports:
-      - '8010:8010'
+      - '4000:4000'
     env_file:
       - .env
 
@@ -47,15 +47,6 @@ services:
         target: /opt/app/skimo-pl
     env_file:
       - .env
-
-  nginx:
-    build:
-      context: .
-      dockerfile: ./Dockerfile.nginx
-    depends_on:
-      - skimo-pl
-    ports:
-      - '8020:8020'
 
 volumes:
   skimo-pl-postgres:

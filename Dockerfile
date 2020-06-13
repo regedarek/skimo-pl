@@ -1,4 +1,4 @@
-FROM ruby:2.7 
+FROM ruby:2.7
 MAINTAINER maintainer@example.com
 
 RUN groupadd -g 61000 docker
@@ -21,4 +21,5 @@ RUN bundle install
 RUN chown -R docker:docker /opt/app
 USER docker
 VOLUME ["$INSTALL_PATH/public"]
-CMD bundle exec unicorn -c config/unicorn.rb
+
+CMD bundle exec rails server -p 4000
